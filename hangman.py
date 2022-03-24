@@ -17,6 +17,7 @@ def run():
     letters = [x for x in word]
     empty_letters = ["_" for x in letters]
     letter_index_dict = {}
+    lifes = 10
     # enumerate gives you the letters and a number for each letter that contains it
     for idx, letter in enumerate(word):
         if not letter_index_dict.get(letter):
@@ -29,14 +30,22 @@ def run():
         for element in empty_letters:
             print(element +" ", end = "")
         print("\n")
-
+        print(f"You've got {lifes} lifes")
+        
         letter = input("Enter a letter: ").strip().upper() # strip takes the gaps out, upper makes every letter uppercase
         assert letter.isalpha(), "You can only enter letters" # The assert statement makes sure that you only enter letters 
 
         if letter in letters:
             for idx in letter_index_dict[letter]:
                 empty_letters[idx] = letter
+        else:
+            lifes -= 1
         
+        if lifes == 0:
+            os.system("clear")
+            print("You run out of lifes so you lost, the word was: ", word)
+            break
+            
         if "_" not in empty_letters:
             os.system("clear")
             print("Congratulations! You won, the word was: ", word)
